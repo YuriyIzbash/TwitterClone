@@ -16,12 +16,19 @@ struct LoginView: View {
         // parent container
         VStack {
             // header view
-            AuthHeaderView(title1: "Hello.", title2: "Welcome Back!")
+            AuthHeaderView(title1: "Hello.",
+                           title2: "Welcome Back!")
             
             VStack(spacing: 40) {
-                CustomInputField(imageName: "envelope", placeholderText: "Email", text: $email)
+                CustomInputField(imageName: "envelope",
+                                 placeholderText: "Email",
+                                 isSecureField: false,
+                                 text: $email)
                 
-                CustomInputField(imageName: "lock", placeholderText: "Password", text: $password)
+                CustomInputField(imageName: "lock",
+                                 placeholderText: "Password",
+                                 isSecureField: true,
+                                 text: $password)
             }
             .padding(.horizontal, 32)
             .padding(.top, 44)
