@@ -11,6 +11,7 @@ struct ProfilePhotoSelectorView: View {
     @State private var showImagePicker: Bool = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
@@ -19,21 +20,53 @@ struct ProfilePhotoSelectorView: View {
             Button {
                 showImagePicker.toggle()
             } label: {
-                Image("plus_photo")
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundColor(Color(.systemBlue))
-                    .scaledToFill()
-                    .frame(width: 180, height: 180)
-                    .padding(.top, 44)
+                if let profileImage = profileImage {
+                    profileImage
+                        .resizable()
+                        .modifier(ProfileImageModifier())
+                } else {
+                    Image("plus_photo")
+                        .modifier(ProfileImageModifier())
+                }
             }
-            .sheet(isPresented: $showImagePicker) {
+            .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
                 ImagePicker(selectedImage: $selectedImage)
+            }
+            .padding(.top, 44)
+            
+            if let selectedImage = selectedImage {
+                Button {
+                    viewModel.uploadProfileImage(selectedImage)
+                } label: {
+                    Text("Continue")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 340, height: 50)
+                        .background(Color(.systemBlue))
+                        .clipShape(Capsule())
+                        .padding()
+                }
+                .shadow(color: .gray.opacity(0.5), radius: 100, x: 0, y: 0)
             }
         
             Spacer()
         }
         .ignoresSafeArea()
+    }
+    
+    func loadImage() {
+        guard let selectedImage = selectedImage else { return }
+        profileImage = Image(uiImage: selectedImage)
+    }
+}
+
+private struct ProfileImageModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color(.systemBlue))
+            .scaledToFill()
+            .frame(width: 180, height: 180)
+            .clipShape(Circle())
     }
 }
 
