@@ -11,6 +11,7 @@ import Kingfisher
 struct ContentView: View {
     @State private var showMenu = false
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var selectedTab: Tab = .home
     
     var body: some View {
         Group {
@@ -32,7 +33,7 @@ struct ContentView: View {
 extension ContentView {
     var mainInterfaceView: some View {
         ZStack (alignment: .topLeading) {
-            MainTabView()
+            MainTabView(selectedTab: $selectedTab)
                 .navigationBarHidden(showMenu)
             
             if showMenu {
@@ -52,7 +53,7 @@ extension ContentView {
                 .offset(x: showMenu ? 0 : -300, y: 0)
                 .background(showMenu ? Color.white : Color.clear)
         }
-        .navigationTitle("Home")
+        .navigationTitle(selectedTab.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -73,6 +74,25 @@ extension ContentView {
         }
         .onAppear {
             showMenu = false
+        }
+    }
+}
+enum Tab {
+    case home
+    case explore
+    case messages
+    case notifications
+
+    var title: String {
+        switch self {
+        case .home:
+            return "Home"
+        case .explore:
+            return "Explore"
+        case .messages:
+            return "Messages"
+        case .notifications:
+            return "Notifications"
         }
     }
 }

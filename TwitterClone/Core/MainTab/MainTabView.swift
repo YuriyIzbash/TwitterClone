@@ -8,40 +8,37 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var selectedIndex = 0
+    @Binding var selectedTab: Tab
+    
     var body: some View {
-        TabView(selection: $selectedIndex) {
+        TabView(selection: $selectedTab) { // Use selectedTab instead of selectedIndex
             FeedView()
-                .onTapGesture {
-                    self.selectedIndex = 0
+                .tabItem {
+                    Image(systemName: "house")
                 }
-                .tabItem { Image(systemName: "house")
-                }.tag(0)
+                .tag(Tab.home) // Use enum case instead of integers
             
             ExploreView()
-                .onTapGesture {
-                    self.selectedIndex = 1
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
                 }
-                .tabItem { Image(systemName: "magnifyingglass")
-                }.tag(1)
+                .tag(Tab.explore)
             
             NotificationsView()
-                .onTapGesture {
-                    self.selectedIndex = 2
+                .tabItem {
+                    Image(systemName: "bell")
                 }
-                .tabItem { Image(systemName: "bell")
-                }.tag(2)
+                .tag(Tab.notifications)
             
             MessagesView()
-                .onTapGesture {
-                    self.selectedIndex = 3
+                .tabItem {
+                    Image(systemName: "envelope")
                 }
-                .tabItem { Image(systemName: "envelope")
-                }.tag(3)
+                .tag(Tab.messages)
         }
     }
 }
 
 #Preview {
-    MainTabView()
+    MainTabView(selectedTab: .constant(.home)) // Use a constant binding for preview
 }
