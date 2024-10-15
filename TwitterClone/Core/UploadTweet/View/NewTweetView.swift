@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct NewTweetView: View {
-    @State private var caption = ""
+    @State private var caption: String = ""
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var viewModel = UploadTweetViewModel()
@@ -47,7 +47,6 @@ struct NewTweetView: View {
                         .clipShape(Circle())
                         .frame(width: 64, height: 64)
                 }
-                
                 TextArea("What's happening?", text: $caption)
             }
             .padding()
