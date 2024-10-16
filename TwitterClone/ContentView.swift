@@ -20,7 +20,9 @@ struct ContentView: View {
                 LoginView()
             } else {
                 // have loged in user
-                mainInterfaceView
+                NavigationView {
+                    mainInterfaceView
+                }
             }
         }
     }
@@ -52,6 +54,7 @@ extension ContentView {
                 .frame(width: 300)
                 .offset(x: showMenu ? 0 : -300, y: 0)
                 .background(showMenu ? Color.white : Color.clear)
+                .edgesIgnoringSafeArea(.top) 
         }
         .navigationTitle(selectedTab.title)
         .navigationBarTitleDisplayMode(.inline)

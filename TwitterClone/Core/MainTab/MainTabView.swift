@@ -11,12 +11,12 @@ struct MainTabView: View {
     @Binding var selectedTab: Tab
     
     var body: some View {
-        TabView(selection: $selectedTab) { // Use selectedTab instead of selectedIndex
+        TabView(selection: $selectedTab) {
             FeedView()
                 .tabItem {
                     Image(systemName: "house")
                 }
-                .tag(Tab.home) // Use enum case instead of integers
+                .tag(Tab.home)
             
             ExploreView()
                 .tabItem {
@@ -40,5 +40,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView(selectedTab: .constant(.home)) // Use a constant binding for preview
+    MainTabView(selectedTab: .constant(.home))
 }

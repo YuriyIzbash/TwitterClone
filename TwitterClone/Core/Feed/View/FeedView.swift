@@ -18,11 +18,16 @@ struct FeedView: View {
                 LazyVStack {
                     ForEach(viewModel.tweets) { tweet in
                         TweetRowView(tweet: tweet)
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.top, 10)
                     }
                 }
+                .padding(.top, 16)
             }
-            
+            .padding(.top, 1)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+         
             Button {
                 showNewTweetView.toggle()
             } label: {
@@ -39,6 +44,11 @@ struct FeedView: View {
             .fullScreenCover(isPresented: $showNewTweetView) {
                 NewTweetView()
             }
+        }
+        .edgesIgnoringSafeArea(.bottom) // Ensure we ignore only the bottom area for floating button, not top
+        .onAppear {
+            // Reset or enforce layout conditions when returning to the view
+            UIApplication.shared.windows.first?.rootViewController?.additionalSafeAreaInsets.top = 0
         }
     }
 }

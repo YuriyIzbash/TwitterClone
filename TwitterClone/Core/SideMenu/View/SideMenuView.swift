@@ -33,6 +33,7 @@ struct SideMenuView: View {
                         .padding(.vertical)
                 }
                 .padding(.leading)
+                .padding(.top, 50)
                 
                 ForEach(SideMenuViewModel.allCases, id: \.rawValue) { viewModel in
                     if viewModel == .profile {
@@ -54,6 +55,7 @@ struct SideMenuView: View {
                 
                 Spacer()
             }
+            .edgesIgnoringSafeArea(.top)
         }
     }
 }
