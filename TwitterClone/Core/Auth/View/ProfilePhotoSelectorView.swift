@@ -29,9 +29,7 @@ struct ProfilePhotoSelectorView: View {
                         .modifier(ProfileImageModifier())
                 }
             }
-            .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
-                ImagePicker(selectedImage: $selectedImage)
-            }
+            
             .padding(.top, 44)
             
             if let selectedImage = selectedImage {
@@ -52,6 +50,9 @@ struct ProfilePhotoSelectorView: View {
             Spacer()
         }
         .ignoresSafeArea()
+        .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
+            ImagePicker(selectedImage: $selectedImage)
+        }
     }
     
     func loadImage() {
