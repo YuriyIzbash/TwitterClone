@@ -47,15 +47,36 @@ struct NewTweetView: View {
                         .clipShape(Circle())
                         .frame(width: 64, height: 64)
                 }
-                TextArea("What's happening?", text: $caption)
+
+                // Custom text input with placeholder
+                ZStack(alignment: .topLeading) {
+                   // Placeholder text
+                    if caption.isEmpty {
+                        Text("What's happening?")
+                            .foregroundColor(.gray)
+                            .padding(.leading, 12)
+                            .padding(.top, 12)
+                    }
+
+                    // TextEditor for input
+                    TextEditor(text: $caption)
+                        .padding(4)
+                        .frame(minHeight: 150, alignment: .leading)
+                        .background(Color.clear)
+                        .cornerRadius(8)
+                        .opacity(caption.isEmpty ? 0.25 : 1)
+                }
             }
             .padding()
+            
+            Spacer()
         }
         .onReceive(viewModel.$didUploadTweet) { success in
             if success {
                 presentationMode.wrappedValue.dismiss()
             }
         }
+        .padding(.bottom, 20)
     }
 }
 
