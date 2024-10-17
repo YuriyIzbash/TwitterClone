@@ -40,15 +40,16 @@ struct FeedView: View {
             .background(Color(.systemBlue))
             .foregroundColor(.white)
             .clipShape(Circle())
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom, 100)
             .fullScreenCover(isPresented: $showNewTweetView) {
                 NewTweetView()
             }
         }
         .edgesIgnoringSafeArea(.bottom) // Ensure we ignore only the bottom area for floating button, not top
         .onAppear {
-            // Reset or enforce layout conditions when returning to the view
-            UIApplication.shared.windows.first?.rootViewController?.additionalSafeAreaInsets.top = 0
-        }
+             //Reset or enforce layout conditions when returning to the view
+           UIApplication.shared.windows.first?.rootViewController?.additionalSafeAreaInsets.top = 0
+       }
     }
 }
